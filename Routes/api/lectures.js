@@ -39,7 +39,18 @@ route.post('/', (req, res) => {
  */
 // Update Lecture with given lecture Id
 route.put('/:lectureId', (req, res) => {
-
+    Lecture.update({
+            name: req.body.name
+        }, {
+            where: {
+                id: req.params.lectureId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 /**

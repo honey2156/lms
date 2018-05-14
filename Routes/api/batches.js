@@ -41,7 +41,18 @@ route.post('/', (req, res) => {
  */
 // Update batch with given batch Id
 route.put('/:batchId', (req, res) => {
-
+    Batch.update({
+            name: req.body.name
+        }, {
+            where: {
+                id: req.params.batchId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 /**

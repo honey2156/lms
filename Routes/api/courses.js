@@ -220,7 +220,18 @@ route.post('/:courseId/batches/:batchId/students', (req, res) => {
  */
 // Update Course with given course Id
 route.put('/:courseId', (req, res) => {
-
+    Course.update({
+            name: req.body.name
+        }, {
+            where: {
+                id: req.params.courseId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 /**

@@ -42,7 +42,18 @@ route.post('/', (req, res) => {
  */
 // Update subject with given subject Id
 route.put('/:subjectId', (req, res) => {
-
+    Subject.update({
+            name: req.body.name
+        }, {
+            where: {
+                id: req.params.subjectId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 /**

@@ -42,7 +42,18 @@ route.post('/', (req, res) => {
  */
 // Update Teacher with given subject Id
 route.put('/:teacherId', (req, res) => {
-
+    Teacher.update({
+            name: req.body.name
+        }, {
+            where: {
+                id: req.params.teacherId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 /**

@@ -44,7 +44,18 @@ route.post('/', (req, res) => {
  */
 // Update student with given student Id
 route.put('/:studentId', (req, res) => {
-
+    Student.update({
+            name: req.body.name
+        }, {
+            where: {
+                id: req.params.studentId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 /**
