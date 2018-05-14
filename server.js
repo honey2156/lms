@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 /**
- *  Middleware json and url encoding support
+ *  Middleware for json and url encoding support
  */
 app.use(express.json())
 app.use(express.urlencoded({
