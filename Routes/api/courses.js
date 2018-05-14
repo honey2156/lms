@@ -4,6 +4,7 @@ const Batch = require('../../db').Batch
 const Lecture = require('../../db').Lecture
 const Student = require('../../db').Student
 const StudentBatchMap = require('../../db').StudentBatchMap
+const SubTeachMap = require('../../db').SubTeachMap
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
@@ -213,6 +214,7 @@ route.post('/:courseId/batches/:batchId/students', (req, res) => {
         })
 })
 
+
 /**
  * PUT requests
  */
@@ -226,7 +228,16 @@ route.put('/:courseId', (req, res) => {
  */
 // Delete Course with given course Id
 route.delete('/:courseId', (req, res) => {
-
+    Course.destroy({
+            where: {
+                id: req.params.courseId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 module.exports = route

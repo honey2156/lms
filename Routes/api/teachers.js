@@ -50,7 +50,16 @@ route.put('/:teacherId', (req, res) => {
  */
 // Delete Teacher with given subject Id
 route.delete('/:teacherId', (req, res) => {
-
+    Teacher.destroy({
+            where: {
+                id: req.params.teacherId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 module.exports = route

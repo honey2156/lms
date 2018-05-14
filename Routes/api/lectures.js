@@ -47,7 +47,16 @@ route.put('/:lectureId', (req, res) => {
  */
 // Delete Lecture with given lecture Id
 route.delete('/:lectureId', (req, res) => {
-
+    Lecture.destroy({
+            where: {
+                id: req.params.lectureId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 module.exports = route

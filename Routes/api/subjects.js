@@ -50,7 +50,16 @@ route.put('/:subjectId', (req, res) => {
  */
 // Delete subject with given subject Id
 route.delete('/:subjectId', (req, res) => {
-
+    Subject.destroy({
+            where: {
+                id: req.params.subjectId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 module.exports = route

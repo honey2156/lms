@@ -49,7 +49,16 @@ route.put('/:batchId', (req, res) => {
  */
 // Delete batch with given batch Id
 route.delete('/:batchId', (req, res) => {
-
+    Batch.destroy({
+            where: {
+                id: req.params.batchId
+            }
+        })
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
 })
 
 module.exports = route
