@@ -7,14 +7,14 @@ const Lecture = require('../../db').Lecture
 route.get('/', (req, res) => {
     Lecture.findAll({})
         .then((lectures) => {
-            res.json(lectures)
+            res.status(200).json(lectures)
         })
 })
 
 route.get('/:lectureId', (req, res) => {
     Lecture.findById(parseInt(req.params.lectureId))
         .then((lecture) => {
-            res.json(lecture)
+            res.status(200).json(lecture)
         })
 })
 
@@ -28,7 +28,7 @@ route.post('/', (req, res) => {
         batchId: req.body.batchId
     })
     lecture.save()
-    res.json({
+    res.status(201).json({
         success: true,
         lecture: lecture
     })

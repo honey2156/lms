@@ -14,14 +14,14 @@ const Op = Sequelize.Op
 route.get('/', (req, res) => {
     Course.findAll({})
         .then((courses) => {
-            res.json(courses)
+            res.status(200).json(courses)
         })
 })
 
 route.get('/:courseId', (req, res) => {
     Course.findById(parseInt(req.params.courseId))
         .then((course) => {
-            res.json(course)
+            res.status(200).json(course)
         })
 })
 
@@ -115,7 +115,7 @@ route.get('/:courseId/batches/:batchId/students', (req, res) => {
                     }
                 })
                 .then((students) => {
-                    res.json(students)
+                    res.status(200).json(students)
                 })
 
         })
@@ -134,7 +134,7 @@ route.post('/', (req, res) => {
         name: req.body.name
     })
     course.save()
-    res.json({
+    res.status(201).json({
         success: true,
         course: course
     })

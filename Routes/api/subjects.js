@@ -7,14 +7,14 @@ const Subject = require('../../db').Subject
 route.get('/', (req, res) => {
     Subject.findAll({})
         .then((subjects) => {
-            res.json(subjects)
+            res.status(200).json(subjects)
         })
 })
 
 route.get('/:subjectId', (req, res) => {
     Subject.findById(parseInt(req.params.subjectId))
         .then((subject) => {
-            res.json(subject)
+            res.status(200).json(subject)
         })
 })
 
@@ -31,7 +31,7 @@ route.post('/', (req, res) => {
         name: req.body.name
     })
     subject.save()
-    res.json({
+    res.status(201).json({
         success: true,
         subject: subject
     })

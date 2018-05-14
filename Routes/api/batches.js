@@ -8,7 +8,7 @@ const Batch = require('../../db').Batch
 route.get('/', (req, res) => {
     Batch.findAll({})
         .then((batches) => {
-            res.json(batches)
+            res.status(200).json(batches)
         })
 })
 
@@ -16,7 +16,7 @@ route.get('/', (req, res) => {
 route.get('/:batchId', (req, res) => {
     Batch.findById(parseInt(req.params.batchId))
         .then((batch) => {
-            res.json(batch)
+            res.status(200).json(batch)
         })
 })
 
@@ -30,7 +30,7 @@ route.post('/', (req, res) => {
         courseId: req.body.courseId
     })
     batch.save()
-    res.json({
+    res.status(201).json({
         success: true,
         batch: batch
     })

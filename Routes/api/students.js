@@ -1,5 +1,9 @@
 const route = require('express').Router()
 const Student = require('../../db').Student
+const StudentBatchMap = require('../../db').StudentBatchMap
+const Batch = require('../../db').Batch
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 /**
  * GET requests
@@ -8,7 +12,7 @@ const Student = require('../../db').Student
 route.get('/', (req, res) => {
     Student.findAll({})
         .then((students) => {
-            res.json(students)
+            res.status(200).json(students)
         })
 })
 
@@ -16,12 +20,34 @@ route.get('/', (req, res) => {
 route.get('/:studentId', (req, res) => {
     Student.findById(parseInt(req.params.studentId))
         .then((student) => {
-            res.json(student)
+            res.status(200).json(student)
         })
 })
 
 route.get('/:studentId/batches', (req, res) => {
-    res.send('students/id/batches')
+    StudentBatchMap.findAll({
+            where: {
+                studentId: req.params.studentId
+            },
+            attributes: ['batchId']
+        })
+        .then((batchIds) => {
+            bIds = []
+            batchIds.forEach(element => {
+                bIds.push(element.batchId)
+            });
+            Batch.findAll({
+                    where: {
+                        id: {
+                            [Op.in]: bIds
+                        }
+                    }
+                })
+                .then((batches) => {
+                    res.status(200).json(batches)
+                })
+
+        })
 })
 
 /**
@@ -33,7 +59,7 @@ route.post('/', (req, res) => {
         name: req.body.name
     })
     student.save()
-    res.json({
+    res.status(201).json({
         success: true,
         student: student
     })
