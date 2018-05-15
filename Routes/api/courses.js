@@ -27,7 +27,7 @@ route.get('/:courseId', (req, res) => {
 })
 
 route.get('/:courseId/batches', (req, res) => {
-    Batch.find({
+    Batch.findAll({
             where: {
                 courseId: req.params.courseId
             }
