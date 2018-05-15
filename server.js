@@ -10,6 +10,16 @@ app.use(express.urlencoded({
 }))
 
 /**
+ * Middleware to serve Headers for Access-Control-Allow-Origin
+ */
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,PUT,PATCH,DELETE')
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    next()
+})
+
+/**
  *  Middleware for Route API
  */
 app.use('/api', require('./Routes/api').route)

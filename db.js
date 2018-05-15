@@ -108,6 +108,14 @@ Student.belongsToMany(Batch, {
 /**
  * Database Sync
  */
+DB.authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
+
 DB.sync()
     .then(() => {
         force: true
