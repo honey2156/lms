@@ -65,6 +65,18 @@ route.post('/', (req, res) => {
     })
 })
 
+// Enroll Student to batch
+route.post('/:studentId/batches/:batchId', (req, res) => {
+    StudentBatchMap.create({
+        batchId: req.params.batchId,
+        studentId: req.params.studentId
+    })
+    .then((studentBatchMap) => {
+        studentBatchMap.save()
+        res.status(201).json(studentBatchMap)
+    })
+})
+
 /**
  * PUT requests
  */
