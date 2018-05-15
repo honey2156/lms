@@ -1,5 +1,9 @@
 const route = require('express').Router()
 const Subject = require('../../db').Subject
+const SubTeachMap = require('../../db').SubTeachMap
+const Teacher = require('../../db').Teacher
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 /**
  * GET requests
@@ -19,7 +23,29 @@ route.get('/:subjectId', (req, res) => {
 })
 
 route.get('/:subjectId/teachers', (req, res) => {
-    res.send('subjects/id/teachers')
+    let Sid = req.params.subjectId
+
+    SubTeachMap.findAll({
+        where: {
+            subjectId: Sid
+        },
+        attributes: ['teacherId']
+    }).then((teacherIds) => {
+        let teacherArray = []
+        teacherIds.forEach((teacher) => {
+            teacherArray.push(teacher.teacherId)
+        })
+        Teacher.findAll({
+            where: {
+                id: {
+                    [Op.in]: teacherArray
+                }
+
+            }
+        }).then((teacher) => {
+            res.json(teacher)
+        })
+    })
 })
 
 /**

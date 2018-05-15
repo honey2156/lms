@@ -5,6 +5,7 @@ const Lecture = require('../../db').Lecture
 const Student = require('../../db').Student
 const StudentBatchMap = require('../../db').StudentBatchMap
 const SubTeachMap = require('../../db').SubTeachMap
+const Teacher = require('../../db').Teacher
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
@@ -122,7 +123,46 @@ route.get('/:courseId/batches/:batchId/students', (req, res) => {
 })
 
 route.get('/:courseId/batches/:batchId/teachers', (req, res) => {
-    res.send('courses/id/batches/id/teachers')
+    let courseID = req.params.courseId;
+    let batchID = req.params.batchId;
+    console.log("batch is :" + batchID)
+    Lecture.findAll({
+        where: {
+            batchId: parseInt(batchID)
+        },
+        attributes: ['id']
+    }).then((lectureIds) => {
+        let lectureArray = []
+        lectureIds.forEach((lecture) => {
+            console.log("here" + lecture.id)
+            lectureArray.push(lecture.id)
+        })
+        console.log(lectureArray)
+        SubTeachMap.findAll({
+            where: {
+                lectureId: {
+                    [Op.in]: lectureArray
+                }
+            },
+            attributes: ['teacherId']
+        }).then((teacherIds) => {
+            let teacherArray = []
+            teacherIds.forEach((teacher) => {
+                console.log("here" + teacher.teacherId)
+                teacherArray.push(teacher.teacherId)
+            })
+            console.log(teacherArray)
+            Teacher.findAll({
+                where: {
+                    id: {
+                        [Op.in]: teacherArray
+                    }
+                }
+            }).then((teacher) => {
+                res.json(teacher)
+            })
+        })
+    })
 })
 
 /**
