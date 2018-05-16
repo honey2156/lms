@@ -62,7 +62,7 @@ route.get('/:courseId/batches/:batchId', (req, res) => {
 })
 
 route.get('/:courseId/batches/:batchId/lectures', (req, res) => {
-    Lecture.find({
+    Lecture.findAll({
             where: {
                 batchId: req.params.batchId
             }
